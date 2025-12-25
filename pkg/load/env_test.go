@@ -8,11 +8,11 @@ import (
 func Test_loadEnv(t *testing.T) {
 	os.Setenv("HOST", "localhost")
 	os.Setenv("PORT", "8080")
-	os.Setenv("ADDRS", "localhost,127.0.0.1")
+	os.Setenv("ADDRS", "localhost")
 	type config struct {
 		Host  string   `json:"host" env:"HOST" def:"127.0.0.1"`
 		Port  int      `json:"port" env:"PORT" def:"8080"`
-		Addrs []string `json:"addrs" env:"ADDRS" def:"localhost,127.0.0.1"`
+		Addrs []string `json:"addrs" env:"ADDRS" def:"localhost"`
 	}
 	var c config
 	if err := LoadEnv(&c); err != nil {

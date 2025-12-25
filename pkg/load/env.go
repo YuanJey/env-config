@@ -48,6 +48,12 @@ func LoadEnv(config interface{}) error {
 		case reflect.Slice:
 			// Assuming we want to handle it as a slice of strings
 			if field.Type().Elem().Kind() == reflect.String {
+				if !strings.Contains(envValue, ",") {
+					slice := reflect.MakeSlice(field.Type(), 1, 1)
+					slice.Index(0).SetString(envValue)
+					field.Set(slice)
+					continue
+				}
 				parts := strings.Split(envValue, ",")
 				slice := reflect.MakeSlice(field.Type(), len(parts), len(parts))
 				for i, part := range parts {
